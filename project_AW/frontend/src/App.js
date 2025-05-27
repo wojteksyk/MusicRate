@@ -75,7 +75,7 @@ function App() {
                     />
                 </div>
                 <h1 className="welcome-header" style={{ flexGrow: 1, textAlign: 'center', margin: 0 }}>
-                    Witaj, {user.username}
+                    Witaj cwelu, {user.username}
                 </h1>
             </div>
 
