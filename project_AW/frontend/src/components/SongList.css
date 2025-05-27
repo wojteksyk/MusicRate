@@ -43,4 +43,9 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+.rating div span {
+    margin-right: 5px;
+    user-select: none;
+}
+
 
