@@ -1,46 +1,46 @@
-.songlist-wrapper {
-    max-width: 800px;
-    margin: 40px auto;
+.song-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
     padding: 20px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.songlist-wrapper h2 {
-    margin-bottom: 20px;
-    color: #444;
-}
-
-.songlist {
-    list-style: none;
-    padding: 0;
-    margin: 0;
 }
 
 .song-card {
-    padding: 15px 20px;
-    margin-bottom: 15px;
+    background-color: white;
+    padding: 20px;
     border-radius: 10px;
-    background: #f0f3ff;
-    box-shadow: inset 0 2px 4px rgba(255,255,255,0.8);
-    transition: background 0.3s ease;
-    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    width: 220px;
+    transition: transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .song-card:hover {
-    background: #d7defb;
+    transform: scale(1.03);
 }
 
-.song-title {
-    font-weight: 600;
-    font-size: 18px;
-    color: #222;
+.song-card h3 {
+    margin: 0 0 10px;
+    color: #333;
 }
 
-.song-artist {
+.song-card p {
     color: #666;
-    font-size: 14px;
-    margin-top: 4px;
+    margin: 0 0 15px;
 }
+
+.song-card button {
+    width: 100%;
+    padding: 12px 0;
+    border: none;
+    border-radius: 8px;
+    background-color: #5a7dee;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+

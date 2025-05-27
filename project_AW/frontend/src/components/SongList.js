@@ -1,18 +1,16 @@
 import React from 'react';
 import './SongList.css';
 
-const SongList = ({ songs }) => {
+const SongList = ({ songs, onSelectSong }) => {
     return (
-        <div className="songlist-wrapper">
-            <h2>Lista piosenek</h2>
-            <ul className="songlist">
-                {songs.map(song => (
-                    <li key={song._id} className="song-card">
-                        <div className="song-title">{song.title}</div>
-                        <div className="song-artist">{song.artist}</div>
-                    </li>
-                ))}
-            </ul>
+        <div className="song-list">
+            {songs.map(song => (
+                <div key={song.id} className="song-card">
+                    <h3>{song.title}</h3>
+                    <p>{song.artist}</p>
+                    <button onClick={() => onSelectSong(song)}><b>Szczegóły</b></button>
+                </div>
+            ))}
         </div>
     );
 };

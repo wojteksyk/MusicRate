@@ -4,23 +4,24 @@ body {
   background-color: #f9fafb;
   color: #333;
 }
-input {
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  transition: border-color 0.3s ease;
+
+.header-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background-color: #f9fafb;
 }
 
-input:focus {
-  outline: none;
-  border-color: #6a82fb;
-  box-shadow: 0 0 8px rgba(106,130,251,0.5);
+.hamburger-wrapper {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
 }
+
 .welcome-header {
-  text-align: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 700;
   font-size: 2.6rem;
   letter-spacing: 0.03em;
