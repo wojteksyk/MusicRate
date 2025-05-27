@@ -1,22 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import './SongList.css';
 
-const SongList = () => {
-    const [songs, setSongs] = useState([]);
-
-    useEffect(() => {
-        axios.get('http://localhost:5000/api/songs')
-            .then(response => setSongs(response.data))
-            .catch(error => console.error(error));
-    }, []);
-
+const SongList = ({ songs }) => {
     return (
-        <div>
+        <div className="songlist-wrapper">
             <h2>Lista piosenek</h2>
-            <ul>
-                {songs.map((song, idx) => (
-                    <li key={idx}>
-                        {song.title} - {song.artist} (Rating: {song.rating})
+            <ul className="songlist">
+                {songs.map(song => (
+                    <li key={song._id} className="song-card">
+                        <div className="song-title">{song.title}</div>
+                        <div className="song-artist">{song.artist}</div>
                     </li>
                 ))}
             </ul>

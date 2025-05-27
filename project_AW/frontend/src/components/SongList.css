@@ -1,0 +1,46 @@
+.songlist-wrapper {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.songlist-wrapper h2 {
+    margin-bottom: 20px;
+    color: #444;
+}
+
+.songlist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.song-card {
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    background: #f0f3ff;
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.8);
+    transition: background 0.3s ease;
+    cursor: pointer;
+}
+
+.song-card:hover {
+    background: #d7defb;
+}
+
+.song-title {
+    font-weight: 600;
+    font-size: 18px;
+    color: #222;
+}
+
+.song-artist {
+    color: #666;
+    font-size: 14px;
+    margin-top: 4px;
+}
