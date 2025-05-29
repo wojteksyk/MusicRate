@@ -30,3 +30,48 @@ body {
   margin-top: 30px;
   margin-bottom: 20px;
 }
+/* Styl formularza dodawania piosenki */
+.add-song-form {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.add-song-form h3 {
+  margin-bottom: 16px;
+  font-size: 1.5rem;
+  color: #5a7dee;
+  text-align: center;
+}
+
+.add-song-form input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.add-song-form button {
+  width: 100%;
+  padding: 10px 0;
+  background-color: #5a7dee;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.add-song-form button:hover {
+  background-color: #4766c8;
+}
+

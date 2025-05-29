@@ -1,91 +1,43 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './SongDetails.css';
 
-const Star = ({ filled, clickable, onClick, onMouseEnter, onMouseLeave }) => {
-    return (
-        <span
-            style={{
-                cursor: clickable ? 'pointer' : 'default',
-                color: filled ? '#ffc107' : '#e4e5e9',
-                fontSize: '30px',
-                userSelect: 'none',
-                marginRight: '5px',
-            }}
-            onClick={clickable ? onClick : undefined}
-            onMouseEnter={clickable ? onMouseEnter : undefined}
-            onMouseLeave={clickable ? onMouseLeave : undefined}
-        >
-      ★
-    </span>
-    );
-};
-
-const SongDetails = ({ song, onBack, showToast }) => {
+const SongDetails = ({ song, onBack, showToast, user }) => {
     const [rating, setRating] = useState(0);
-    const [hoverRating, setHoverRating] = useState(0);
-    const [comment, setComment] = useState('');
 
-    const handleSave = () => {
-        if (rating === 0 || comment.trim() === '') {
-            showToast('Proszę podać ocenę i komentarz!', 'error');
+    const handleSaveRating = async () => {
+        if (rating < 1 || rating > 5) {
+            showToast('Wybierz ocenę od 1 do 5', 'error');
             return;
         }
-        // Przykład wysyłki na backend:
-        // axios.post('/api/rate', { songId: song.id, rating, comment })
-
-        showToast(`Ocena: ${rating}, komentarz zapisane!`, 'success');
+        try {
+            const res = await axios.post(`http://localhost:5000/api/songs/${song._id}/rate`, {
+                userId: user._id,
+                rating
+            });
+            showToast('Ocena zapisana', 'success');
+            // Opcjonalnie zaktualizuj szczegóły piosenki w App.js albo refetchuj listę
+        } catch {
+            showToast('Błąd zapisu oceny', 'error');
+        }
     };
-
-    const average = song.averageRating || 0; // np. 3.6 z backendu
-    const roundedAverage = Math.round(average); // do pokazania pełnych gwiazdek
 
     return (
         <div className="song-details">
-            <button onClick={onBack} className="back-button">← Powrót</button>
-            <h2>{song.title} — {song.artist}</h2>
+            <button className="back-button" onClick={onBack}>← Powrót</button>
+            <h2>{song.title}</h2>
+            <p><b>Wykonawca:</b> {song.artist}</p>
+            <p><b>Średnia ocena:</b> {song.averageRating.toFixed(2)} ⭐</p>
 
             <div className="rating">
-                <label>Twoja ocena:</label>
-                <div>
-                    {[1, 2, 3, 4, 5].map((star) => (
-                        <Star
-                            key={star}
-                            filled={hoverRating >= star || rating >= star}
-                            clickable={true}
-                            onClick={() => setRating(star)}
-                            onMouseEnter={() => setHoverRating(star)}
-                            onMouseLeave={() => setHoverRating(0)}
-                        />
-                    ))}
-                </div>
+                <label>Twoja ocena (1-5):</label>
+                <select value={rating} onChange={e => setRating(Number(e.target.value))}>
+                    <option value={0}>Wybierz ocenę</option>
+                    {[1,2,3,4,5].map(n => <option key={n} value={n}>{n}</option>)}
+                </select>
             </div>
 
-            <div className="average-rating" style={{ marginBottom: '20px' }}>
-                <label>Średnia ocen:</label>
-                <div>
-                    {[1, 2, 3, 4, 5].map((star) => (
-                        <Star
-                            key={star}
-                            filled={star <= roundedAverage}
-                            clickable={false}
-                        />
-                    ))}
-                    <span style={{ marginLeft: '10px', fontSize: '16px', color: '#333' }}>
-            {average.toFixed(1)} / 5
-          </span>
-                </div>
-            </div>
-
-            <div className="comment">
-                <label>Komentarz:</label>
-                <textarea
-                    rows="4"
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                />
-            </div>
-
-            <button onClick={handleSave} className="save-button">Zapisz</button>
+            <button className="save-button" onClick={handleSaveRating}>Zapisz ocenę</button>
         </div>
     );
 };

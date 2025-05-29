@@ -7,6 +7,10 @@ import ContactForm from './components/ContactForm';
 import Toast from './components/Toast';
 import './components/RankingPanel.css';
 import axios from 'axios';
+import AddSongForm from './components/AddSongForm';
+import AddSongPage from './components/AddSongPage';
+
+
 
 function App() {
     const [user, setUser] = useState(null);
@@ -41,6 +45,10 @@ function App() {
         setView('songs');
     };
 
+    const addSong = (newSong) => {
+        setSongs(prev => [...prev, newSong]);
+    };
+
     const showToast = (message, type) => {
         setToast({ message, type, visible: true });
     };
@@ -52,6 +60,7 @@ function App() {
     const openContactForm = () => setView('contact');
     const closeContactForm = () => setView('songs');
     const openAdminPanel = () => setView('adminPanel');
+    const openAddSongForm = () => setView('addSong');
 
     const topRatedSongs = [...songs]
         .filter(song => song.avgRating != null)
@@ -64,7 +73,6 @@ function App() {
 
     return (
         <>
-            {/* Główny kontener z marginesem po prawej */}
             <div style={{ marginRight: rankingExpanded ? '33.33vw' : '250px', transition: 'margin-right 0.3s ease' }}>
                 <div style={{ display: 'flex', alignItems: 'center', padding: '10px 30px', position: 'relative' }}>
                     <div style={{ position: 'absolute', left: 30 }}>
@@ -75,13 +83,36 @@ function App() {
                             onAdminPanelClick={openAdminPanel}
                         />
                     </div>
-                    <h1 className="welcome-header" style={{ flexGrow: 1, textAlign: 'center', margin: 0 }}>
-                        Witaj cwelu, {user.username}
-                    </h1>
+                    {view === 'songs' && !selectedSong && (
+                        <h1 className="welcome-header" style={{ flexGrow: 1, textAlign: 'center', margin: 0 }}>
+                            Witaj, {user.username}
+                        </h1>
+                    )}
                 </div>
 
                 {view === 'songs' && !selectedSong && (
-                    <SongList songs={songs} onSelectSong={handleSelectSong} />
+                    <>
+                        <SongList songs={songs} onSelectSong={handleSelectSong} />
+                        <button
+                            onClick={openAddSongForm}
+                            style={{
+                                position: 'fixed',
+                                bottom: '30px',
+                                right: rankingExpanded ? '35vw' : '270px',
+                                padding: '12px 20px',
+                                borderRadius: '50px',
+                                border: 'none',
+                                backgroundColor: '#5a7dee',
+                                color: 'white',
+                                fontSize: '16px',
+                                cursor: 'pointer',
+                                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                                zIndex: 999,
+                            }}
+                        >
+                            Dodaj piosenkę
+                        </button>
+                    </>
                 )}
 
                 {view === 'details' && selectedSong && (
@@ -89,6 +120,15 @@ function App() {
                         song={selectedSong}
                         onBack={handleBack}
                         showToast={showToast}
+                        user={user}
+                    />
+                )}
+
+                {view === 'addSong' && (
+                    <AddSongPage
+                        onAddSong={addSong}
+                        showToast={showToast}
+                        onBack={() => setView('songs')}
                     />
                 )}
 
@@ -106,6 +146,7 @@ function App() {
                             onClick={() => setView('songs')}
                             style={{
                                 marginTop: 20,
+                                padding: '10px 20px',
                                 padding: '10px 20px',
                                 borderRadius: 6,
                                 border: 'none',
@@ -126,7 +167,6 @@ function App() {
                 )}
             </div>
 
-            {/* Panel rankingowy po prawej, fixed */}
             <div
                 className={`ranking-panel ${rankingExpanded ? 'expanded' : ''}`}
                 style={{
@@ -166,15 +206,7 @@ function App() {
                 </div>
                 <div className="ranking-list" style={{ padding: '10px 15px', flexGrow: 1 }}>
                     {topRatedSongs.map((song, index) => (
-                        <div
-                            key={song.id}
-                            className="ranking-item"
-                            style={{
-                                marginBottom: '12px',
-                                paddingBottom: '6px',
-                                borderBottom: '1px solid #ddd',
-                            }}
-                        >
+                        <div key={song.id} className="ranking-item" style={{ marginBottom: '12px', paddingBottom: '6px', borderBottom: '1px solid #ddd' }}>
                             <div className="ranking-title" style={{ fontWeight: '600' }}>
                                 {index + 1}. {song.title}
                             </div>

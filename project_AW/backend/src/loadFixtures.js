@@ -7,19 +7,26 @@ const usersData = require('../fixtures/users.json');
 
 mongoose.connect("mongodb://mongo:27017/musicrate")
     .then(async () => {
+        const songsCount = await Song.countDocuments();
+        const usersCount = await User.countDocuments();
 
-        await Song.deleteMany({});
-        await User.deleteMany({});
+        if (songsCount === 0) {
+            await Song.insertMany(songsData);
+            console.log("🎵 Songs fixtures loaded.");
+        } else {
+            console.log("🎵 Songs collection already has data, skipping load.");
+        }
 
-        await Song.insertMany(songsData);
-        console.log("🎵 Songs fixtures loaded.");
-
-        await User.insertMany(usersData);
-        console.log("👤 Users fixtures loaded.");
+        if (usersCount === 0) {
+            await User.insertMany(usersData);
+            console.log("👤 Users fixtures loaded.");
+        } else {
+            console.log("👤 Users collection already has data, skipping load.");
+        }
 
         process.exit();
     })
     .catch(err => {
-        console.error(err);
+        console.error('Error loading fixtures:', err);
         process.exit(1);
     });
