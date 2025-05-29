@@ -12,7 +12,7 @@ const ContactForm = ({ onClose, showToast }) => {
             return;
         }
 
-        // Tutaj możesz dodać wysłanie do backendu
+
 
         showToast('Wiadomość wysłana pomyślnie!', 'success');
         setEmail('');

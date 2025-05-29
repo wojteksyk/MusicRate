@@ -7,10 +7,7 @@ import ContactForm from './components/ContactForm';
 import Toast from './components/Toast';
 import './components/RankingPanel.css';
 import axios from 'axios';
-import AddSongForm from './components/AddSongForm';
 import AddSongPage from './components/AddSongPage';
-
-
 
 function App() {
     const [user, setUser] = useState(null);
@@ -73,7 +70,7 @@ function App() {
 
     return (
         <>
-            <div style={{ marginRight: rankingExpanded ? '33.33vw' : '250px', transition: 'margin-right 0.3s ease' }}>
+            <div style={{ marginRight: (view === 'songs' && !selectedSong) ? (rankingExpanded ? '33.33vw' : '250px') : 0, transition: 'margin-right 0.3s ease' }}>
                 <div style={{ display: 'flex', alignItems: 'center', padding: '10px 30px', position: 'relative' }}>
                     <div style={{ position: 'absolute', left: 30 }}>
                         <HamburgerMenu
@@ -83,11 +80,9 @@ function App() {
                             onAdminPanelClick={openAdminPanel}
                         />
                     </div>
-                    {view === 'songs' && !selectedSong && (
-                        <h1 className="welcome-header" style={{ flexGrow: 1, textAlign: 'center', margin: 0 }}>
-                            Witaj, {user.username}
-                        </h1>
-                    )}
+                    <h1 className="welcome-header" style={{ flexGrow: 1, textAlign: 'center', margin: 0 }}>
+                        {view === 'songs' && !selectedSong ? `Witaj, ${user.username}` : 'MusicRate'}
+                    </h1>
                 </div>
 
                 {view === 'songs' && !selectedSong && (
@@ -110,7 +105,7 @@ function App() {
                                 zIndex: 999,
                             }}
                         >
-                            Dodaj piosenkę
+                            <b>Dodaj piosenkę</b>
                         </button>
                     </>
                 )}
@@ -147,7 +142,6 @@ function App() {
                             style={{
                                 marginTop: 20,
                                 padding: '10px 20px',
-                                padding: '10px 20px',
                                 borderRadius: 6,
                                 border: 'none',
                                 backgroundColor: '#e0e0e0',
@@ -167,59 +161,61 @@ function App() {
                 )}
             </div>
 
-            <div
-                className={`ranking-panel ${rankingExpanded ? 'expanded' : ''}`}
-                style={{
-                    position: 'fixed',
-                    top: 0,
-                    right: 0,
-                    height: '100vh',
-                    width: rankingExpanded ? '33.33vw' : '250px',
-                    backgroundColor: '#f7f7f7',
-                    boxShadow: '-2px 0 5px rgba(0,0,0,0.1)',
-                    overflowY: 'auto',
-                    transition: 'width 0.3s ease',
-                    zIndex: 9999,
-                    display: 'flex',
-                    flexDirection: 'column',
-                }}
-            >
+            {view === 'songs' && !selectedSong && (
                 <div
-                    className="ranking-header"
-                    onClick={() => setRankingExpanded(!rankingExpanded)}
+                    className={`ranking-panel ${rankingExpanded ? 'expanded' : ''}`}
                     style={{
-                        padding: '15px',
-                        fontWeight: '700',
-                        fontSize: '1.2rem',
-                        cursor: 'pointer',
-                        borderBottom: '1px solid #ddd',
+                        position: 'fixed',
+                        top: 0,
+                        right: 0,
+                        height: '100vh',
+                        width: rankingExpanded ? '33.33vw' : '250px',
+                        backgroundColor: '#f7f7f7',
+                        boxShadow: '-2px 0 5px rgba(0,0,0,0.1)',
+                        overflowY: 'auto',
+                        transition: 'width 0.3s ease',
+                        zIndex: 9999,
                         display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        userSelect: 'none',
-                        backgroundColor: '#5a7dee',
-                        color: 'white',
+                        flexDirection: 'column',
                     }}
                 >
-                    Ranking
-                    <span>{rankingExpanded ? '▲' : '▼'}</span>
-                </div>
-                <div className="ranking-list" style={{ padding: '10px 15px', flexGrow: 1 }}>
-                    {topRatedSongs.map((song, index) => (
-                        <div key={song.id} className="ranking-item" style={{ marginBottom: '12px', paddingBottom: '6px', borderBottom: '1px solid #ddd' }}>
-                            <div className="ranking-title" style={{ fontWeight: '600' }}>
-                                {index + 1}. {song.title}
-                            </div>
-                            {rankingExpanded && (
-                                <div className="ranking-details" style={{ fontSize: '0.9rem', color: '#555', marginTop: '4px' }}>
-                                    <div>Artysta: {song.artist}</div>
-                                    <div>Średnia ocen: {song.avgRating?.toFixed(1) || 'Brak'}</div>
+                    <div
+                        className="ranking-header"
+                        onClick={() => setRankingExpanded(!rankingExpanded)}
+                        style={{
+                            padding: '15px',
+                            fontWeight: '700',
+                            fontSize: '1.2rem',
+                            cursor: 'pointer',
+                            borderBottom: '1px solid #ddd',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            userSelect: 'none',
+                            backgroundColor: '#5a7dee',
+                            color: 'white',
+                        }}
+                    >
+                        Ranking
+                        <span>{rankingExpanded ? '▲' : '▼'}</span>
+                    </div>
+                    <div className="ranking-list" style={{ padding: '10px 15px', flexGrow: 1 }}>
+                        {topRatedSongs.map((song, index) => (
+                            <div key={song.id} className="ranking-item" style={{ marginBottom: '12px', paddingBottom: '6px', borderBottom: '1px solid #ddd' }}>
+                                <div className="ranking-title" style={{ fontWeight: '600' }}>
+                                    {index + 1}. {song.title}
                                 </div>
-                            )}
-                        </div>
-                    ))}
+                                {rankingExpanded && (
+                                    <div className="ranking-details" style={{ fontSize: '0.9rem', color: '#555', marginTop: '4px' }}>
+                                        <div>Artysta: {song.artist}</div>
+                                        <div>Średnia ocen: {song.avgRating?.toFixed(1) || 'Brak'}</div>
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            </div>
+            )}
         </>
     );
 }

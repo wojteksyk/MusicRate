@@ -4,6 +4,7 @@ import './SongDetails.css';
 
 const SongDetails = ({ song, onBack, showToast, user }) => {
     const [rating, setRating] = useState(0);
+    const [hovered, setHovered] = useState(0);
 
     const handleSaveRating = async () => {
         if (rating < 1 || rating > 5) {
@@ -11,15 +12,31 @@ const SongDetails = ({ song, onBack, showToast, user }) => {
             return;
         }
         try {
-            const res = await axios.post(`http://localhost:5000/api/songs/${song._id}/rate`, {
+            await axios.post(`http://localhost:5000/api/songs/${song._id}/rate`, {
                 userId: user._id,
                 rating
             });
             showToast('Ocena zapisana', 'success');
-            // Opcjonalnie zaktualizuj szczegóły piosenki w App.js albo refetchuj listę
         } catch {
             showToast('Błąd zapisu oceny', 'error');
         }
+    };
+
+    const renderStars = () => {
+        return [...Array(5)].map((_, index) => {
+            const starValue = index + 1;
+            return (
+                <span
+                    key={starValue}
+                    className={`star ${starValue <= (hovered || rating) ? 'filled' : ''}`}
+                    onClick={() => setRating(starValue)}
+                    onMouseEnter={() => setHovered(starValue)}
+                    onMouseLeave={() => setHovered(0)}
+                >
+                    ★
+                </span>
+            );
+        });
     };
 
     return (
@@ -27,14 +44,11 @@ const SongDetails = ({ song, onBack, showToast, user }) => {
             <button className="back-button" onClick={onBack}>← Powrót</button>
             <h2>{song.title}</h2>
             <p><b>Wykonawca:</b> {song.artist}</p>
-            <p><b>Średnia ocena:</b> {song.averageRating.toFixed(2)} ⭐</p>
+            <p><b>Średnia ocena:</b> {song.averageRating?.toFixed(2) || 'Brak'} ⭐</p>
 
             <div className="rating">
-                <label>Twoja ocena (1-5):</label>
-                <select value={rating} onChange={e => setRating(Number(e.target.value))}>
-                    <option value={0}>Wybierz ocenę</option>
-                    {[1,2,3,4,5].map(n => <option key={n} value={n}>{n}</option>)}
-                </select>
+                <label>Twoja ocena:</label>
+                <div className="star-rating">{renderStars()}</div>
             </div>
 
             <button className="save-button" onClick={handleSaveRating}>Zapisz ocenę</button>

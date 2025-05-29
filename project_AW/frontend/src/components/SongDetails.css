@@ -80,4 +80,11 @@
 .star.filled {
     color: #ffc107;
 }
+.center-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 
