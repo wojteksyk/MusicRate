@@ -31,7 +31,6 @@ function App() {
         setSelectedSong(null);
         setView('songs');
     };
-
     const handleSelectSong = (song) => {
         setSelectedSong(song);
         setView('details');
@@ -59,9 +58,16 @@ function App() {
     const openAdminPanel = () => setView('adminPanel');
     const openAddSongForm = () => setView('addSong');
 
+    const updateSelectedSong = (updatedSong) => {
+        setSelectedSong(updatedSong);
+
+        setSongs(prevSongs => prevSongs.map(song =>
+            song._id === updatedSong._id ? updatedSong : song
+        ));
+    };
     const topRatedSongs = [...songs]
-        .filter(song => song.avgRating != null)
-        .sort((a, b) => b.avgRating - a.avgRating)
+        .filter(song => song.averageRating != null) // poprawiłem na averageRating
+        .sort((a, b) => b.averageRating - a.averageRating)
         .slice(0, 10);
 
     if (!user) {
@@ -70,7 +76,12 @@ function App() {
 
     return (
         <>
-            <div style={{ marginRight: (view === 'songs' && !selectedSong) ? (rankingExpanded ? '33.33vw' : '250px') : 0, transition: 'margin-right 0.3s ease' }}>
+            <div
+                style={{
+                    marginRight: (view === 'songs' && !selectedSong) ? (rankingExpanded ? '33.33vw' : '250px') : 0,
+                    transition: 'margin-right 0.3s ease'
+                }}
+            >
                 <div style={{ display: 'flex', alignItems: 'center', padding: '10px 30px', position: 'relative' }}>
                     <div style={{ position: 'absolute', left: 30 }}>
                         <HamburgerMenu
@@ -116,6 +127,7 @@ function App() {
                         onBack={handleBack}
                         showToast={showToast}
                         user={user}
+                        onUpdateSong={updateSelectedSong}
                     />
                 )}
 
@@ -201,14 +213,27 @@ function App() {
                     </div>
                     <div className="ranking-list" style={{ padding: '10px 15px', flexGrow: 1 }}>
                         {topRatedSongs.map((song, index) => (
-                            <div key={song.id} className="ranking-item" style={{ marginBottom: '12px', paddingBottom: '6px', borderBottom: '1px solid #ddd' }}>
-                                <div className="ranking-title" style={{ fontWeight: '600' }}>
+                            <div
+                                key={song._id || song.id}
+                                className="ranking-item"
+                                style={{
+                                    marginBottom: '12px',
+                                    paddingBottom: '6px',
+                                    borderBottom: '1px solid #ddd',
+                                    cursor: 'pointer',
+                                    transition: 'background-color 0.2s ease'
+                                }}
+                            >
+                                <div
+                                    className="ranking-title"
+                                    style={{ fontWeight: '600', fontSize: '1rem' }}
+                                >
                                     {index + 1}. {song.title}
                                 </div>
                                 {rankingExpanded && (
                                     <div className="ranking-details" style={{ fontSize: '0.9rem', color: '#555', marginTop: '4px' }}>
                                         <div>Artysta: {song.artist}</div>
-                                        <div>Średnia ocen: {song.avgRating?.toFixed(1) || 'Brak'}</div>
+                                        <div>Średnia ocen: {song.averageRating?.toFixed(1) || 'Brak'}</div>
                                     </div>
                                 )}
                             </div>

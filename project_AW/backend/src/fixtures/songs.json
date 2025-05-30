@@ -1,0 +1,57 @@
+[
+  {
+    "title": "Rio",
+    "artist": "Sentino",
+    "ratings": [
+      { "userId": "683831be16e0649a607813a7", "value": 4 },
+      { "userId": "683831be16e0649a607813a8", "value": 5 },
+      { "userId": "683831be16e0649a607813a9", "value": 3 },
+      { "userId": "683831be16e0649a607813aa", "value": 4 },
+      { "userId": "683831be16e0649a607813ab", "value": 2 },
+      { "userId": "683831be16e0649a607813ad", "value": 4 },
+      { "userId": "683831be16e0649a607813ae", "value": 5 },
+      { "userId": "683831be16e0649a607813b1", "value": 3 },
+      { "userId": "683831be16e0649a607813b3", "value": 4 },
+      { "userId": "683831be16e0649a607813b5", "value": 4 },
+      { "userId": "683831be16e0649a607813b7", "value": 2 },
+      { "userId": "683831be16e0649a607813b9", "value": 3 }
+    ],
+    "averageRating": 3.42
+  },
+  {
+    "title": "Midas",
+    "artist": "Sentino krul",
+    "ratings": [
+      { "userId": "683831be16e0649a607813a7", "value": 3 },
+      { "userId": "683831be16e0649a607813aa", "value": 4 },
+      { "userId": "683831be16e0649a607813ab", "value": 3 },
+      { "userId": "683831be16e0649a607813ac", "value": 2 },
+      { "userId": "683831be16e0649a607813ae", "value": 5 },
+      { "userId": "683831be16e0649a607813b0", "value": 3 },
+      { "userId": "683831be16e0649a607813b2", "value": 4 },
+      { "userId": "683831be16e0649a607813b4", "value": 3 },
+      { "userId": "683831be16e0649a607813b6", "value": 2 },
+      { "userId": "683831be16e0649a607813b8", "value": 4 },
+      { "userId": "683831be16e0649a607813ba", "value": 5 }
+    ],
+    "averageRating": 3.45
+  },
+  {
+    "title": "Przekorny los",
+    "artist": "Akcent",
+    "ratings": [
+      { "userId": "683831be16e0649a607813a8", "value": 4 },
+      { "userId": "683831be16e0649a607813a9", "value": 3 },
+      { "userId": "683831be16e0649a607813aa", "value": 5 },
+      { "userId": "683831be16e0649a607813ab", "value": 4 },
+      { "userId": "683831be16e0649a607813ad", "value": 3 },
+      { "userId": "683831be16e0649a607813af", "value": 5 },
+      { "userId": "683831be16e0649a607813b1", "value": 4 },
+      { "userId": "683831be16e0649a607813b3", "value": 3 },
+      { "userId": "683831be16e0649a607813b5", "value": 5 },
+      { "userId": "683831be16e0649a607813b7", "value": 4 },
+      { "userId": "683831be16e0649a607813b9", "value": 4 }
+    ],
+    "averageRating": 3.91
+  }
+]

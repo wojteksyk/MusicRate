@@ -33,7 +33,7 @@ const AuthForm = ({ onLogin }) => {
             if (!isRegister) {
                 setTimeout(() => {
                     onLogin(res.data.user);
-                }, 1000); // lekka zwłoka po sukcesie
+                }, 1000);
             }
         } catch (err) {
             showToast(err.response?.data?.message || 'Błąd połączenia z serwerem', 'error');

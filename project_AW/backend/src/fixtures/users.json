@@ -1,0 +1,109 @@
+[
+  {
+    "_id": "683831be16e0649a607813a7",
+    "username": "admin",
+    "password": "admin123",
+    "role": "admin",
+    "noHash": true
+  },
+  {
+    "_id": "683831be16e0649a607813a8",
+      "username": "eminemos",
+    "password": "pass"
+  },
+  {
+    "_id": "683831be16e0649a607813a9",
+    "username": "drakeson",
+    "password": "pass"
+  },
+  {
+    "_id": "683831be16e0649a607813aa",
+    "username": "kasjo",
+    "password": "pass"
+  },
+  {
+    "_id": "683831be16e0649a607813ab",
+    "username": "katarzyna_sobecka",
+    "password": "pass"
+  },
+  {
+    "_id": "683831be16e0649a607813ac",
+    "username": "nav",
+    "password": "pass"
+  },
+  {
+    "_id": "683831be16e0649a607813ad",
+    "username": "cardiBBL",
+    "password": "pass"
+  },
+  {
+    "_id": "683831be16e0649a607813ae",
+    "username": "liliputek_wayne",
+    "password": "pass"
+  },
+  {
+    "_id": "683831be16e0649a607813af",
+    "username": "travisScott123",
+    "password": "pass"
+  },
+  {
+    "_id": "683831be16e0649a607813b0",
+    "username": "getmalone",
+    "password": "pass"
+  },
+  {
+    "_id": "683831be16e0649a607813b1",
+    "username": "meekmilly",
+    "password": "pass"
+  },
+  {
+    "_id": "683831be16e0649a607813b2",
+    "username": "nickiminaz",
+    "password": "pass"
+  },
+  {
+    "_id": "683831be16e0649a607813b3",
+    "username": "fjuczer",
+    "password": "pass"
+  },
+  {
+    "_id": "683831be16e0649a607813b4",
+    "username": "vet_dre",
+    "password": "pass"
+  },
+  {
+    "_id": "683831be16e0649a607813b5",
+    "username": "upalona_owca_snoop_dogg",
+    "password": "pass"
+  },
+  {
+    "_id": "683831be16e0649a607813b6",
+    "username": "gabi_leda69",
+    "password": "pass"
+  },
+  {
+    "_id": "683831be16e0649a607813b7",
+    "username": "icespajs",
+    "password": "pass"
+  },
+  {
+    "_id": "683831be16e0649a607813b8",
+    "username": "21 savage",
+    "password": "pass"
+  },
+  {
+    "_id": "683831be16e0649a607813b9",
+    "username": "4pack",
+    "password": "pass"
+  },
+  {
+    "_id": "683831be16e0649a607813ba",
+    "username": "tecca",
+    "password": "pass"
+  },
+  {
+    "_id": "683831be16e0649a607813bb",
+    "username": "tylertwurca",
+    "password": "pass"
+  }
+]

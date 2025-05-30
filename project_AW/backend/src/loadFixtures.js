@@ -1,32 +1,53 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
-const Song = require('./models/Song');
+const fs = require('fs');
+const path = require('path');
+
 const User = require('./models/User');
+const Song = require('./models/Song');
 
-const songsData = require('../fixtures/songs.json');
-const usersData = require('../fixtures/users.json');
+async function loadFixtures() {
+    try {
+        const mongoUri = process.env.MONGO_URI || 'mongodb://mongo:27017/musicrate';
+        await mongoose.connect(mongoUri);
 
-mongoose.connect("mongodb://mongo:27017/musicrate")
-    .then(async () => {
-        const songsCount = await Song.countDocuments();
-        const usersCount = await User.countDocuments();
+        console.log('Connected to MongoDB');
 
-        if (songsCount === 0) {
-            await Song.insertMany(songsData);
-            console.log("🎵 Songs fixtures loaded.");
-        } else {
-            console.log("🎵 Songs collection already has data, skipping load.");
+        await User.deleteMany({});
+        await Song.deleteMany({});
+
+        const usersData = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'users.json')));
+        const songsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'songs.json')));
+
+        for (const userData of usersData) {
+            const user = new User({
+                _id: new mongoose.Types.ObjectId(userData._id),
+                username: userData.username,
+                password: userData.noHash ? userData.password : userData.password, // tu możesz dodać hashowanie
+                role: userData.role || 'user',
+            });
+            await user.save();
         }
 
-        if (usersCount === 0) {
-            await User.insertMany(usersData);
-            console.log("👤 Users fixtures loaded.");
-        } else {
-            console.log("👤 Users collection already has data, skipping load.");
+        for (const songData of songsData) {
+            const song = new Song({
+                title: songData.title,
+                artist: songData.artist,
+                ratings: songData.ratings.map(r => ({
+                    userId: new mongoose.Types.ObjectId(r.userId),
+                    value: r.value,
+                })),
+                averageRating: songData.averageRating || 0,
+            });
+            await song.save();
         }
 
-        process.exit();
-    })
-    .catch(err => {
+        console.log('Fixtures loaded successfully!');
+        process.exit(0);
+    } catch (err) {
         console.error('Error loading fixtures:', err);
         process.exit(1);
-    });
+    }
+}
+
+loadFixtures();

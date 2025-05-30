@@ -26,7 +26,7 @@ const HamburgerMenu = ({ onLogout, isAdmin, onAdminPanelClick, onContactClick })
 
             <div
                 style={{
-                    maxHeight: open ? '160px' : '0', // większy gdy admin
+                    maxHeight: open ? '160px' : '0',
                     overflow: 'hidden',
                     transition: 'max-height 0.4s ease',
                     background: 'white',
@@ -41,7 +41,6 @@ const HamburgerMenu = ({ onLogout, isAdmin, onAdminPanelClick, onContactClick })
                     left: 0,
                 }}
             >
-                {/* Przycisk kontakt */}
                 <button
                     onClick={() => {
                         onContactClick();
