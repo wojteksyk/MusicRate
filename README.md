@@ -9,8 +9,8 @@ MusicRate to aplikacja webowa pozwalająca użytkownikom na:
 * Dodawanie i przeglądanie utworów muzycznych,
 * Ocenianie piosenek w skali 1–5 gwiazdek,
 * Wyświetlanie rankingu najlepiej ocenianych utworów,
-* Rejestrację i logowanie użytkowników,
-* Jako admin(hasło-admin123) mozliwość wejscia na adminpanel gdzie mozna
+* Rejestrację i logowanie użytkowników(kod uwietrzytelniający - 123),
+* Jako admin(hasło-admin123) mozliwość wejscia na adminpanel gdzie mozna usunać piosenkę i zobaczyć uzytkowników,
 * Formularz kontaktowy.
 
 Technologie:
@@ -23,7 +23,7 @@ Podział pracy:
 
 Wojciech Syk:
 
-Stworzenie całej funkcji logowania, zrobienie Menu, dodanie funkcji obliczania średnich ocen wraz z auto-refreshem, Skonfigurowanie bazy danych i funkcjonalność danych z bazy we froncie, Funkcjonalność dodawania piosenek 
+Stworzenie całej funkcji logowania, zrobienie Menu, dodanie funkcji obliczania średnich ocen wraz z auto-refreshem, Skonfigurowanie bazy danych i funkcjonalność danych z bazy we froncie, Funkcjonalność dodawania piosenek, adminpanel
 
 Kacper Sobecki:
  
