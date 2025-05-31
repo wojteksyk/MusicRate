@@ -1,3 +1,5 @@
+Lepiej pobrac do txt bo tutaj sie dziwnie wyswietla
+
 MusicRate to aplikacja, która pozwala użytkownikowi na:
 -rejestrację i logowanie użytkowników,
 -przeglądanie piosenek w liście(takie charts pod wzgledem ocen, przeglądanie rankingu na podstawie średnich ocen),
@@ -52,5 +54,6 @@ song
   ],
   "averageRating": number
 }
+
 
 
