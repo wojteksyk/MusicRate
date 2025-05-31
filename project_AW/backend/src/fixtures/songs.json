@@ -53,5 +53,54 @@
       { "userId": "683831be16e0649a607813b9", "value": 4 }
     ],
     "averageRating": 3.91
+  },
+  {
+    "title": "Us vs Them",
+    "artist": "Nemzzz",
+    "ratings": [
+      { "userId": "683831be16e0649a607813a7", "value": 4 },
+      { "userId": "683831be16e0649a607813a8", "value": 4 },
+      { "userId": "683831be16e0649a607813a9", "value": 5 },
+      { "userId": "683831be16e0649a607813aa", "value": 3 },
+      { "userId": "683831be16e0649a607813ab", "value": 4 },
+      { "userId": "683831be16e0649a607813ad", "value": 5 },
+      { "userId": "683831be16e0649a607813ae", "value": 4 },
+      { "userId": "683831be16e0649a607813b1", "value": 3 },
+      { "userId": "683831be16e0649a607813b3", "value": 4 }
+    ],
+    "averageRating": 3.78
+  },
+  {
+    "title": "Taste",
+    "artist": "Lil Tecca",
+    "ratings": [
+      { "userId": "683831be16e0649a607813a7", "value": 5 },
+      { "userId": "683831be16e0649a607813a8", "value": 4 },
+      { "userId": "683831be16e0649a607813a9", "value": 4 },
+      { "userId": "683831be16e0649a607813aa", "value": 4 },
+      { "userId": "683831be16e0649a607813ab", "value": 5 },
+      { "userId": "683831be16e0649a607813ad", "value": 5 },
+      { "userId": "683831be16e0649a607813ae", "value": 4 },
+      { "userId": "683831be16e0649a607813b1", "value": 5 },
+      { "userId": "683831be16e0649a607813b3", "value": 4 },
+      { "userId": "683831be16e0649a607813b5", "value": 4 }
+    ],
+    "averageRating": 4.4
+  },
+  {
+    "title": "Przez twe oczy zielone",
+    "artist": "Akcent",
+    "ratings": [
+      { "userId": "683831be16e0649a607813a7", "value": 4 },
+      { "userId": "683831be16e0649a607813a8", "value": 4 },
+      { "userId": "683831be16e0649a607813a9", "value": 4 },
+      { "userId": "683831be16e0649a607813aa", "value": 3 },
+      { "userId": "683831be16e0649a607813ab", "value": 3 },
+      { "userId": "683831be16e0649a607813ad", "value": 4 },
+      { "userId": "683831be16e0649a607813ae", "value": 5 },
+      { "userId": "683831be16e0649a607813b1", "value": 3 },
+      { "userId": "683831be16e0649a607813b3", "value": 4 }
+    ],
+    "averageRating": 3.67
   }
 ]

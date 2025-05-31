@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Song = require('../models/Song');
 
-
 router.get('/', async (req, res) => {
     try {
         const songs = await Song.find();
@@ -11,7 +10,6 @@ router.get('/', async (req, res) => {
         res.status(500).json({ error: 'Błąd serwera' });
     }
 });
-
 
 router.post('/', async (req, res) => {
     const { title, artist } = req.body;
@@ -56,6 +54,16 @@ router.post('/:id/rate', async (req, res) => {
 
         await song.save();
         res.json(song);
+    } catch (err) {
+        res.status(500).json({ error: 'Błąd serwera' });
+    }
+});
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const songId = req.params.id;
+        await Song.findByIdAndDelete(songId);
+        res.json({ message: 'Piosenka usunięta' });
     } catch (err) {
         res.status(500).json({ error: 'Błąd serwera' });
     }

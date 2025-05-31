@@ -12,25 +12,41 @@ import AddSongPage from './components/AddSongPage';
 function App() {
     const [user, setUser] = useState(null);
     const [songs, setSongs] = useState([]);
+    const [users, setUsers] = useState([]);
     const [selectedSong, setSelectedSong] = useState(null);
     const [view, setView] = useState('songs');
     const [toast, setToast] = useState({ message: '', type: '', visible: false });
     const [rankingExpanded, setRankingExpanded] = useState(false);
 
+
     useEffect(() => {
         if (user) {
-            axios.get('http://localhost:5000/api/songs')
-                .then(res => setSongs(res.data))
-                .catch(console.error);
+            fetchSongs();
         }
     }, [user]);
+
+
+    const fetchSongs = () => {
+        axios.get('http://localhost:5000/api/songs')
+            .then(res => setSongs(res.data))
+            .catch(() => showToast('Błąd przy pobieraniu piosenek', 'error'));
+    };
+
+
+    const fetchUsers = () => {
+        axios.get('http://localhost:5000/api/users')
+            .then(res => setUsers(res.data))
+            .catch(() => showToast('Błąd przy pobieraniu użytkowników', 'error'));
+    };
 
     const handleLogout = () => {
         setUser(null);
         setSongs([]);
+        setUsers([]);
         setSelectedSong(null);
         setView('songs');
     };
+
     const handleSelectSong = (song) => {
         setSelectedSong(song);
         setView('details');
@@ -55,18 +71,39 @@ function App() {
 
     const openContactForm = () => setView('contact');
     const closeContactForm = () => setView('songs');
-    const openAdminPanel = () => setView('adminPanel');
+    const openAdminPanel = () => {
+        if (user?.role === 'admin') {
+            fetchUsers();
+            setView('adminPanel');
+        } else {
+            showToast('Brak dostępu do panelu administratora', 'error');
+        }
+    };
     const openAddSongForm = () => setView('addSong');
 
     const updateSelectedSong = (updatedSong) => {
         setSelectedSong(updatedSong);
-
         setSongs(prevSongs => prevSongs.map(song =>
             song._id === updatedSong._id ? updatedSong : song
         ));
     };
+
+
+    const deleteSong = (id) => {
+        if (!window.confirm('Na pewno chcesz usunąć tę piosenkę?')) return;
+        axios.delete(`http://localhost:5000/api/songs/${id}`)
+            .then(() => {
+                setSongs(prev => prev.filter(s => s._id !== id));
+                showToast('Piosenka usunięta', 'success');
+            })
+            .catch(() => {
+                showToast('Błąd przy usuwaniu piosenki', 'error');
+            });
+    };
+
+
     const topRatedSongs = [...songs]
-        .filter(song => song.averageRating != null) // poprawiłem na averageRating
+        .filter(song => song.averageRating != null)
         .sort((a, b) => b.averageRating - a.averageRating)
         .slice(0, 10);
 
@@ -146,22 +183,107 @@ function App() {
                     />
                 )}
 
-                {view === 'adminPanel' && (
-                    <div style={{ padding: 30, textAlign: 'center' }}>
-                        <h2>Panel administratora - w przygotowaniu</h2>
+                {view === 'adminPanel' && user.role === 'admin' && (
+                    <div style={{
+                        padding: 30,
+                        maxWidth: 800,
+                        margin: '0 auto',
+                        backgroundColor: '#f7f7f7',
+                        borderRadius: 8,
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                        color: '#333',
+                        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+                    }}>
+                        <h2 style={{color: '#5a7dee', marginBottom: 20, fontWeight: '700'}}>Panel administratora</h2>
+
+                        <section style={{marginBottom: 40}}>
+                            <h3 style={{color: '#5a7dee', marginBottom: 15}}>Użytkownicy:</h3>
+                            <ul style={{listStyle: 'none', padding: 0}}>
+                                {users.map(u => (
+                                    <li
+                                        key={u._id}
+                                        style={{
+                                            backgroundColor: 'white',
+                                            marginBottom: 10,
+                                            padding: '10px 15px',
+                                            borderRadius: 6,
+                                            boxShadow: '0 1px 4px rgba(0,0,0,0.1)',
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                            fontWeight: '600',
+                                            fontSize: '1rem',
+                                            color: '#444',
+                                        }}
+                                    >
+                                        <span>{u.username} <small
+                                            style={{color: '#777', fontWeight: '400'}}>({u.role})</small></span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h3 style={{color: '#5a7dee', marginBottom: 15}}>Lista piosenek:</h3>
+                            <ul style={{listStyle: 'none', padding: 0}}>
+                                {songs.map(s => (
+                                    <li
+                                        key={s._id}
+                                        style={{
+                                            backgroundColor: 'white',
+                                            marginBottom: 12,
+                                            padding: '12px 15px',
+                                            borderRadius: 6,
+                                            boxShadow: '0 1px 4px rgba(0,0,0,0.1)',
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                            fontWeight: '600',
+                                            fontSize: '1rem',
+                                            color: '#444',
+                                        }}
+                                    >
+                                        <span>{s.title} — {s.artist} — Średnia ocena: {s.averageRating?.toFixed(1) || 'Brak'}</span>
+                                        <button
+                                            onClick={() => deleteSong(s._id)}
+                                            style={{
+                                                backgroundColor: '#e74c3c',
+                                                color: 'white',
+                                                border: 'none',
+                                                borderRadius: 5,
+                                                padding: '6px 12px',
+                                                cursor: 'pointer',
+                                                fontWeight: '600',
+                                                fontSize: '0.9rem',
+                                                transition: 'background-color 0.3s ease',
+                                            }}
+                                            onMouseEnter={e => e.currentTarget.style.backgroundColor = '#c0392b'}
+                                            onMouseLeave={e => e.currentTarget.style.backgroundColor = '#e74c3c'}
+                                        >
+                                            Usuń
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        </section>
+
                         <button
                             onClick={() => setView('songs')}
                             style={{
-                                marginTop: 20,
-                                padding: '10px 20px',
+                                marginTop: 30,
+                                padding: '10px 25px',
                                 borderRadius: 6,
                                 border: 'none',
-                                backgroundColor: '#e0e0e0',
-                                color: '#5a7dee',
+                                backgroundColor: '#5a7dee',
+                                color: 'white',
                                 fontSize: 16,
                                 cursor: 'pointer',
-                                fontWeight: '600',
+                                fontWeight: '700',
+                                boxShadow: '0 4px 10px rgba(90,125,238,0.4)',
+                                transition: 'background-color 0.3s ease',
                             }}
+                            onMouseEnter={e => e.currentTarget.style.backgroundColor = '#4466cc'}
+                            onMouseLeave={e => e.currentTarget.style.backgroundColor = '#5a7dee'}
                         >
                             Powrót
                         </button>
@@ -169,7 +291,7 @@ function App() {
                 )}
 
                 {toast.visible && (
-                    <Toast message={toast.message} type={toast.type} onClose={hideToast} />
+                    <Toast message={toast.message} type={toast.type} onClose={hideToast}/>
                 )}
             </div>
 
